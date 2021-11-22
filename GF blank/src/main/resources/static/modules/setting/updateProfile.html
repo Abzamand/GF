@@ -1,0 +1,67 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">Update Profile</p>
+	</div>
+	<section style="padding: 10px !important;">
+		<div style="margin:10px;position:relative; min-height: 100px; display: flex; justify-content: center; align-items: center;">
+			<div align="center">
+				<button onclick="document.getElementById('photo').click()" type="button" class="buttonPhoto"><img id="myImg" data-ng-src="{{request.photo ? request.photo : './assets/images/profileUpload1.svg'}}"></button>
+				<input id="photo" type='file' style="display: none;" />
+			</div>
+		</div>
+		
+		<div style="margin:10px;position:relative; display: flex; justify-content: center; align-items: center;">
+			<button ng-click="updateProfile = true; changePass = false;" class="buttonFull" 
+				style="{{updateProfile ? 'background:orange' : 'background:white; color:black;border:1px solid black;margin:10px'}}">Edit Profile</button>
+			<button ng-click="updateProfile = false; changePass = true;" class="buttonFull" 
+				style="{{changePass ?  'background:orange' : 'background:white; color:black;border:1px solid black;margin:10px'}}">Change Password</button>
+		</div>
+		<div style="margin:10px;position:relative; display: flex; justify-content: center; align-items: center;">
+			<form ng-show="updateProfile" name="myForm" style="padding-left: 0 !important;" class="fullContainer">
+				<div class="column">
+					<div>
+						<p>Name</p>
+						<input type="text" ng-model="request.fullName">
+					</div>
+					<div>
+						<p>Email</p>
+						<input type="text" ng-model="request.email">
+					</div>
+					<div>
+						<p>Phone</p>
+						<input type="text" ng-model="request.phone">
+					</div>
+					<div style="float: right">
+						<button ng-click="save()" class="buttonFull" >Save</button>
+						<!-- <button ng-click="doDownload()" class="buttonFull" >Save</button> -->
+					</div>
+					<!-- <div style="position: absolute; left: 50%;">
+						<button ng-click="goto('/setting/changePassword')" class="buttonFull" style="background:orange">Change Password</button>
+					</div> -->
+				</div>
+			</form>
+			<form ng-show="changePass" name="myForm" style="padding-left: 0 !important;" class="fullContainer">
+				<div class="column">
+					<div>
+						<p>Current Password</p>
+						<input type="password" ng-model="request.currentPassword" required>
+					</div>
+					<div>
+						<p>New Password</p>
+						<input type="password" ng-model="request.newPassword" required>
+					</div>
+					<div>
+						<p>Confirm Password</p>
+						<input type="password" ng-model="request.confirmPassword" required>
+					</div>
+
+					<div style="float: right">
+						<button ng-click="changePassword()" class="buttonFull" >Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</div>
+
+

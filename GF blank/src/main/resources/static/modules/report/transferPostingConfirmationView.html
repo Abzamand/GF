@@ -1,0 +1,122 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent" >
+		<button class="buttonNoColor" ng-click="goto('/report/TransferPostingConfirmation')" type="button" ><img src="./assets/images/iconBack.svg"></button>
+		<p style="position:absolute;margin:50px;" class="pHeader">Transfer Posting Confirmation No {{data.id}}</p>
+		<button class="buttonRed" ng-click="showReasonPopUp = true;" ng-show="data.status == 'Failed' && data.enabled == 1" type="button" ><img class="cancel">CANCEL</button>
+	</div>
+	<section>
+		<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Date</p>
+					<input type="textDisabled" ng-model="data.date" disabled>
+				</div>
+				<div>
+					<p>SLoc</p>
+					<input type="textDisabled" ng-model="data.idSloc" disabled>
+				</div>
+				<div>
+					<p>Plant</p>
+					<input type="textDisabled" ng-model="data.idPlant" disabled>
+				</div>
+				<div>
+					<p>Doc No</p>
+					<input type="textDisabled" ng-model="data.tpNo" disabled>
+				</div>
+				
+			</div>
+			
+			<div class="column">
+				<div>
+					<p>TP No SAP</p>
+					<input type="textDisabled" ng-model="data.tcpNo" disabled>
+				</div>
+				<div>
+					<p>Vendor Stock Conf.</p>
+					<input type="textDisabled" ng-model="data.stockConfirm" disabled>
+				</div>
+				<div>
+					<p>Vendor Name</p>
+					<input type="textDisabled" ng-model="data.vName" disabled>
+				</div>
+				<div>
+					<p>Description</p>
+					<input type="textDisabled" ng-model="data.descr" disabled>
+				</div>
+			</div>
+			
+			<div class="column">
+				<div>
+					<p>Status</p>
+					<input type="textDisabled" ng-model="data.status" disabled>
+				</div>
+				<div >
+					<p>Info Sync</p>
+					<textarea ng-model="data.infoSync" disabled></textarea>
+					
+				</div>
+				<div ng-show="data.enabled == 0">
+					<p>Reason</p>
+					<textarea area input type="textDisabled" ng-model="data.notes" disabled></textarea>
+				</div>
+			</div>
+			
+			
+			<table class="tableReport">
+				<thead>
+					<tr class="tableHeader">
+						<th>ITEM NO</th>
+						<th>DOC ITEM NO</th>
+						<th>MATERIAL</th>
+						<th>BATCH NO</th>
+						<th>OEM QTY</th>
+						<th>SAP QTY</th>
+						<th>NOTES</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="a in material">
+						<td ng-bind="a.itemNo"></td>
+						<td ng-bind="a.docItem"></td>
+						<td>{{a.matNo}} <br> {{a.matDesc}}</td>
+						<td ng-bind="a.batchNo"></td>
+						<td>{{a.qtyOem}} {{a.uomOem}}</td>
+						<td>{{a.qty}} {{a.uom}}</td>
+						<td ng-bind="a.notes"></td>
+					</tr>
+				</tbody>
+			</table>
+	</section>
+</div>
+
+<!-- POPUP -->
+<div 
+	ng-show = "showReasonPopUp"
+	style="background: rgba(0,0,0,0.5); 
+	width: 100vw; height: 100vh;  z-index: 100; position: fixed; top: 0; left: 0; font-size: 13px;">
+	<div class="reasonPopUp">
+		<div class="headerContent">
+			<p class="pHeader">Input your reason</p>
+		</div>
+		<div style="font-size: 10px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+			<form ng-submit="cancel()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<textarea  area input type="textDisabled" style="min-width:100%;" rows="7"  ng-model="reasonPopUp.result" ></textarea>
+				</div>
+			</div>
+			
+		</form>
+
+		</div>
+		<div>
+			<button style="position: absolute; 
+				bottom: 20px; left: 63%; transform: translate(-50%, 0); 
+				padding: 10px 5%; border-radius: 10px; font-size: 11px; " class="buttonWhite" ng-click="showReasonPopUp = false">Cancel</button>
+			<button style="position: absolute; 
+				bottom: 20px; left: 83%; transform: translate(-50%, 0); padding: 10px 15px; border-radius: 10px; font-size: 11px; " 
+				class="buttonBlue" ng-disabled="myForm.$invalid" ng-click="cancel()">Save</button>
+		</div>
+	</div>
+</div>
+<!-- END POPUP -->

@@ -1,0 +1,56 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">Material</p>
+	</div>
+	<section>
+		<form ng-submit="getRequest(0)" class="tableContainer">
+			<table class="tableBlue">
+				<thead>
+					<tr class="tableHeader">
+						<th>ID</th>
+						<th>NAME</th>
+						<th>SLOC</th>
+						<th>PLANT</th>
+						<th>MATERIAL TYPE</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="searchPane">
+						<td><input placeholder="Search Material" type="text" ng-model="filter.id" class="inputSearch"></td>
+						<td><input placeholder="Search Name" type="text" ng-model="filter.name" class="inputSearch"></td>
+						<td><input placeholder="Search SLOC" type="text" ng-model="filter.idSloc" class="inputSearch"></td>
+						<td><input placeholder="Search Plant" type="text" ng-model="filter.idPlant" class="inputSearch"></td>
+						<td><input placeholder="Search Material Type" type="text" ng-model="filter.materialType" class="inputSearch"></td>
+						<td>
+							<button type="button" class="buttonClear" ng-click="clearFilter()"><img class="clearButton" >Clear</button>
+							<button type="submit" class="buttonSearch" ><img class="searchButton" >Search</button>
+						</td>
+					</tr>
+					<tr ng-repeat="a in list">
+						<td ng-bind="a.id"></td>
+						<td ng-bind="a.name"></td>
+						<td ng-bind="a.idSloc"></td>
+						<td ng-bind="a.idPlant"></td>
+						<td ng-bind="a.materialType"></td>
+						<td></td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div class="paging" ng-show="list.length">
+			<md-button class="skipButton" aria-label="firstPage" ng-show="listPage.currentPage > 0" ng-click="getRequest(0)"> 
+				<md-tooltip>first page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_previous</i>
+			</md-button>
+			<p ng-show="listPage.currentPage > 0 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage - 1)" role="buttonNextPrev">Previous</p>
+			<p ng-repeat="a in listPage" ng-bind="a" ng-click="getRequest(a-1)" role="{{a == listPage.currentPage+1?'buttonDisabled':'button'}}"></p>
+			<p ng-show="listPage.currentPage < listPage.totalPage-1 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage + 1)" role="buttonNextPrev">Next</p>
+			<md-button class="skipButton" aria-label="lastPage" ng-show="listPage.currentPage != listPage.totalPage-1" ng-click="getRequest(listPage.totalPage-1)"> 
+				<md-tooltip>last page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_next</i>
+			</md-button>
+		</div>
+	</section>
+</div>

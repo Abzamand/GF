@@ -1,0 +1,474 @@
+<style>
+/* loader */
+.loader {
+	  position: absolute;
+	  left: 50%;
+	  top: 50vh;
+	  z-index: 10;
+	  width: 150px;
+	  height: 150px;
+	  margin: -75px 0 0 -75px;
+	  border: 16px solid #f3f3f3;
+	  border-radius: 50%;
+	  border-top: 16px solid #3498db;
+	  width: 120px;
+	  height: 120px;
+	  -webkit-animation: spin 2s linear infinite;
+	  animation: spin 2s linear infinite;
+	}
+	#loaderContainer {
+		width: 100%;
+		min-height: 100vh;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(0,0,0,0.5);
+		z-index:9;
+	}
+	@-webkit-keyframes spin {
+	  0% { -webkit-transform: rotate(0deg); }
+	  100% { -webkit-transform: rotate(360deg); }
+	}
+
+	@keyframes spin {
+	  0% { transform: rotate(0deg); }
+	  100% { transform: rotate(360deg); }
+	}
+/* ----- */
+.menuP{
+	display: inline-block;
+	line-height: 50px;
+	margin: 0;
+	vertical-align: super;
+	font-size: 70%;
+}
+.menuIcon{
+	vertical-align: sub;
+}
+.menuButton{
+	width: auto!important;
+	text-transform: none;
+	padding: 0!important;
+	height: 50px!important;
+	margin: 0 0.7% 0 10px!important;
+	border-radius:0!important;
+}
+</style>
+<div id="loaderContainer" style="display:none;">
+	<div class="loader"></div>
+</div>
+<md-button style="width:150px!important; text-align:left; float:right; color:#8998b1;font-size:2em;" class="md-icon-button menuButton" aria-label="add" ng-click="goto('')"> 
+	<md-tooltip>back</md-tooltip>
+	<i class="material-icons menuIcon" style="vertical-align: baseline;">keyboard_backspace</i>
+	<p class="menuP" >back</p>
+</md-button>
+
+<div style="min-height: 100vh;padding: 20px;" ng-init="init()">
+	<p style="color: #8998b1; font-size: 35px;">SYNCHRONIZE <span style="font-size: 20px; color: rgb(183, 201, 232)">LIST</span></p>
+	<!-- <md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('all')"> 
+		<md-tooltip>sync all</md-tooltip>
+		<i class="material-icons menuIcon">sync</i>
+		<p class="menuP" >All</p>
+	</md-button> -->
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('bank')"> 
+		<md-tooltip>sync bank</md-tooltip>
+		<i class="material-icons menuIcon">domain</i>
+		<p class="menuP" >Bank</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('plant')"> 
+		<md-tooltip>sync plant</md-tooltip>
+		<i class="material-icons menuIcon">device_hub</i>
+		<p class="menuP" >Plant</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('salesGroup')"> 
+		<md-tooltip>sync sales group</md-tooltip>
+		<i class="material-icons menuIcon">group_work</i>
+		<p class="menuP" >Sales Group</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('salesOffice')"> 
+		<md-tooltip>sync sales office</md-tooltip>
+		<i class="material-icons menuIcon">home</i>
+		<p class="menuP" >Sales Office</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('jenisAccount')"> 
+		<md-tooltip>sync jenis account</md-tooltip>
+		<i class="material-icons menuIcon">account_balance_wallet</i>
+		<p class="menuP" >Classification</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('salesOrganization')"> 
+		<md-tooltip>sync sales organization</md-tooltip>
+		<i class="material-icons menuIcon">domain</i>
+		<p class="menuP" >Sales Organization</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('division')"> 
+		<md-tooltip>sync division sales area</md-tooltip>
+		<i class="material-icons menuIcon">dashboard</i>
+		<p class="menuP" >Division Sales Area</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('distributionChannel')"> 
+		<md-tooltip>sync distribution channel</md-tooltip>
+		<i class="material-icons menuIcon">settings_overscan</i>
+		<p class="menuP" >Distribution Channel</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('segment')"> 
+		<md-tooltip>sync segment</md-tooltip>
+		<i class="material-icons menuIcon">view_column</i>
+		<p class="menuP" >Segment</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('materialClass')"> 
+		<md-tooltip>sync material class</md-tooltip>
+		<i class="material-icons menuIcon">shopping_basket</i>
+		<p class="menuP" >Material Class</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('shippingPoint')"> 
+		<md-tooltip>sync shipping point</md-tooltip>
+		<i class="material-icons menuIcon">call_split</i>
+		<p class="menuP" >Shipping Point</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('pricingProcedure')"> 
+		<md-tooltip>sync pricing procedure</md-tooltip>
+		<i class="material-icons menuIcon">local_atm</i>
+		<p class="menuP" >Pricing Procedure</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('conditionType')"> 
+		<md-tooltip>sync condition type</md-tooltip>
+		<i class="material-icons menuIcon">sort</i>
+		<p class="menuP" >Condition Type </p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('accessSequence')"> 
+		<md-tooltip>sync access sequence</md-tooltip>
+		<i class="material-icons menuIcon">timeline</i>
+		<p class="menuP" >Access Sequence</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('outlet')"> 
+		<md-tooltip>sync customer</md-tooltip>
+		<i class="material-icons menuIcon">location_city</i>
+		<p class="menuP" >Customer</p>
+	</md-button>
+	<!-- <md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('top')"> 
+		<md-tooltip>sync top</md-tooltip>
+		<i class="material-icons menuIcon">perm_contact_calendar</i>
+		<p class="menuP" >Top</p>
+	</md-button> -->
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isTop" style="cursor:default; -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 280px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width:20px; height: 20px; vertical-align: middle; margin: 0px 0px 0px 10px;" type=checkbox ng-model="requestCheck" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('top')"> 
+				<md-tooltip>sync top</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isTop');$event.stopPropagation();"> 
+			<md-tooltip>sync top</md-tooltip>
+			<i class="material-icons menuIcon">perm_contact_calendar</i>
+			<p class="menuP" >Top</p>
+		</md-button>
+	</div>
+	
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isPricing" style="cursor:default; -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 280px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<!-- <input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width:20px; height: 20px; vertical-align: middle; margin: 0px 0px 0px 10px;" type=checkbox ng-model="requestCheck" ng-click="$event.stopPropagation();"> -->
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('pricing')"> 
+				<md-tooltip>sync pricing</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isPricing');$event.stopPropagation();"> 
+			<md-tooltip>sync pricing</md-tooltip>
+			<i class="material-icons menuIcon">attach_money</i>
+			<p class="menuP" >Pricing</p>
+		</md-button>
+	</div>
+	
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('material')"> 
+		<md-tooltip>sync material</md-tooltip>
+		<i class="material-icons menuIcon">shopping_cart</i>
+		<p class="menuP" >Material</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('materialStock')"> 
+		<md-tooltip>sync material stock</md-tooltip>
+		<i class="material-icons menuIcon">devices_other</i>
+		<p class="menuP" >Material Stock</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('assignUom')"> 
+		<md-tooltip>sync assign uom</md-tooltip>
+		<i class="material-icons menuIcon">format_indent_increase</i>
+		<p class="menuP" >Assign Uom</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('uom')"> 
+		<md-tooltip>sync uom</md-tooltip>
+		<i class="material-icons menuIcon">storage</i>
+		<p class="menuP" >UOM</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('assignPartner')"> 
+		<md-tooltip>sync assign partner</md-tooltip>
+		<i class="material-icons menuIcon">group</i>
+		<p class="menuP" >Assign Partner</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('assignMaterial')"> 
+		<md-tooltip>sync assign material</md-tooltip>
+		<i class="material-icons menuIcon">add_shopping_cart</i>
+		<p class="menuP" >Assign Material</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('wilayahKerja')"> 
+		<md-tooltip>sync wilayah kerja</md-tooltip>
+		<i class="material-icons menuIcon">location_city</i>
+		<p class="menuP" >Wilayah Kerja</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('employee')"> 
+		<md-tooltip>sync employee</md-tooltip>
+		<i class="material-icons menuIcon">person</i>
+		<p class="menuP" >Employee</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('salesOrder')"> 
+		<md-tooltip>sync sales order</md-tooltip>
+		<i class="material-icons menuIcon">format_align_justify</i>
+		<p class="menuP" >Sales Order</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('salesReturn')"> 
+		<md-tooltip>sync return order</md-tooltip>
+		<i class="material-icons menuIcon">call_missed</i>
+		<p class="menuP" >Return Order</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('deliveryOrder')"> 
+		<md-tooltip>sync delivery order</md-tooltip>
+		<i class="material-icons menuIcon">add_shopping_cart</i>
+		<p class="menuP" >Delivery Order</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('route')"> 
+		<md-tooltip>sync route</md-tooltip>
+		<i class="material-icons menuIcon">zoom_out_map</i>
+		<p class="menuP" >Route</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('transportMode')"> 
+		<md-tooltip>sync transport mode</md-tooltip>
+		<i class="material-icons menuIcon">airplanemode_on</i>
+		<p class="menuP" >Transport Mode</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('reason')"> 
+		<md-tooltip>sync reason</md-tooltip>
+		<i class="material-icons menuIcon">format_list_bulleted</i>
+		<p class="menuP" >Reason</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('jenisJual')"> 
+		<md-tooltip>sync sales document type</md-tooltip>
+		<i class="material-icons menuIcon">insert_invitation</i>
+		<p class="menuP" >Sales Document Type</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('vehicle')"> 
+		<md-tooltip>sync vehicle</md-tooltip>
+		<i class="material-icons menuIcon">local_shipping</i>
+		<p class="menuP" >Vehicle</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('vehicleType')"> 
+		<md-tooltip>sync vehicle type</md-tooltip>
+		<i class="material-icons menuIcon">airport_shuttle</i>
+		<p class="menuP" >Vehicle Type</p>
+	</md-button>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isBilling" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 280px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width:20px; height: 20px; vertical-align: middle; margin: 0px 0px 0px 10px;" type=checkbox ng-model="requestCheck" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('billing')"> 
+				<md-tooltip>sync billing</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isBilling');$event.stopPropagation();"> 
+			<md-tooltip>sync billing</md-tooltip>
+			<i class="material-icons menuIcon">mail</i>
+			<p class="menuP" >Billing</p>
+		</md-button>
+	</div>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isSpt" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 250px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('spt')"> 
+				<md-tooltip>sync spt</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isSpt');$event.stopPropagation();"> 
+			<md-tooltip>sync SPT</md-tooltip>
+			<i class="material-icons menuIcon">local_atm</i>
+			<p class="menuP" >SPT</p>
+		</md-button>
+	</div>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isTarget" style="cursor:default; -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 280px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width:20px; height: 20px; vertical-align: middle; margin: 0px 0px 0px 10px;" type=checkbox ng-model="requestCheck" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('target')"> 
+				<md-tooltip>sync target</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isTarget');$event.stopPropagation();"> 
+			<md-tooltip>sync target</md-tooltip>
+			<i class="material-icons menuIcon">insert_chart</i>
+			<p class="menuP" >Target</p>
+		</md-button>
+	</div>
+	
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isAssignBilling" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 250px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('assignBilling')"> 
+				<md-tooltip>sync assign billing</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isAssignBilling');$event.stopPropagation();"> 
+			<md-tooltip>sync assign billing</md-tooltip>
+			<i class="material-icons menuIcon">assignment</i>
+			<p class="menuP" >Assign Billing</p>
+		</md-button>
+	</div>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('position')"> 
+		<md-tooltip>sync position</md-tooltip>
+		<i class="material-icons menuIcon">grain</i>
+		<p class="menuP" >Position</p>
+	</md-button>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isKb" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 250px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('kontraBon')"> 
+				<md-tooltip>sync kontra bon</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isKb');$event.stopPropagation();"> 
+			<md-tooltip>sync kontra bon</md-tooltip>
+			<i class="material-icons menuIcon">my_library_books</i>
+			<p class="menuP" >Kontra Bon</p>
+		</md-button>
+	</div>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('updateKontraBon')"> 
+		<md-tooltip>sync update kontra bon</md-tooltip>
+		<i class="material-icons menuIcon">my_library_add</i>
+		<p class="menuP" >Update Kontra Bon</p>
+	</md-button>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isRp" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 250px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('rincianPenagihan')"> 
+				<md-tooltip>sync rincian penagihan</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isRp');$event.stopPropagation();"> 
+			<md-tooltip>sync rincian penagihan</md-tooltip>
+			<i class="material-icons menuIcon">local_atm</i>
+			<p class="menuP" >Rincian Penagihan</p>
+		</md-button>
+	</div>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('offset')"> 
+		<md-tooltip>sync offset</md-tooltip>
+		<i class="material-icons menuIcon">money_off</i>
+		<p class="menuP" >Offset</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('sendPayment')"> 
+		<md-tooltip>sync send payment</md-tooltip>
+		<i class="material-icons menuIcon">send</i>
+		<p class="menuP" >Send Payment</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('createShipment')"> 
+		<md-tooltip>sync create shipment</md-tooltip>
+		<i class="material-icons menuIcon">directions_ferry</i>
+		<p class="menuP" >Create Shipment</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('deleteShipment')"> 
+		<md-tooltip>sync delete shipment</md-tooltip>
+		<i class="material-icons menuIcon">delete_sweep</i>
+		<p class="menuP" >Delete Shipment</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('closeShipment')"> 
+		<md-tooltip>sync close shipment</md-tooltip>
+		<i class="material-icons menuIcon">lock_outline</i>
+		<p class="menuP" >Close Shipment</p>
+	</md-button>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isPlafon" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 280px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width:20px; height: 20px; vertical-align: middle; margin: 0px 0px 0px 10px;" type=checkbox ng-model="requestCheck" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('plafonDiscount')"> 
+				<md-tooltip>sync plafon discount</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isPlafon');$event.stopPropagation();"> 
+			<md-tooltip>sync plafon discount</md-tooltip>
+			<i class="material-icons menuIcon">assignment</i>
+			<p class="menuP" >Plafon Discount</p>
+		</md-button>
+	</div>
+	<div style="position: relative;float:left;margin: 0 0.7% 0 10px;">
+		<div ng-show="toggle.isFreegoods" style="-moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5); -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); padding: 10px; border-radius:20px; position: absolute; background: white; width: 280px; border: 1px solid rgb(183, 201, 232); z-index: 10;left: 40%; top: -80%;">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width: 150px; height: 50px; padding:16px;" type=date ng-model="requestDate" ng-click="$event.stopPropagation();">
+			<input style="border-radius:14px;border: 1px solid rgb(183, 201, 232);width:20px; height: 20px; vertical-align: middle; margin: 0px 0px 0px 10px;" type=checkbox ng-model="requestCheck" ng-click="$event.stopPropagation();">
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="clearToggle();"> 
+				<md-tooltip>cancel</md-tooltip>
+				<i class="material-icons menuIcon">cancel</i>
+			</md-button>
+			<md-button style="text-align:left; float:right; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('masterFreegoods')"> 
+				<md-tooltip>sync plafon discount</md-tooltip>
+				<i class="material-icons menuIcon">save</i>
+			</md-button>
+		</div>
+		<md-button style="width:150px!important; text-align:left; color:#8998b1;margin:0!important;" class="md-icon-button menuButton" aria-label="add" ng-click="toggleDate('isFreegoods');$event.stopPropagation();"> 
+			<md-tooltip>sync master freegoods</md-tooltip>
+			<i class="material-icons menuIcon">redeem</i>
+			<p class="menuP" >Master Freegoods</p>
+		</md-button>
+	</div>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('credit')"> 
+		<md-tooltip>sync credit info</md-tooltip>
+		<i class="material-icons menuIcon">receipt</i>
+		<p class="menuP" >Credit Info</p>
+	</md-button>
+	<md-button style="width:150px!important; text-align:left; float:left; color:#8998b1;" class="md-icon-button menuButton" aria-label="add" ng-click="sync('clean')"> 
+		<md-tooltip>clean</md-tooltip>
+		<i class="material-icons menuIcon">receipt</i>
+		<p class="menuP" >Clean</p>
+	</md-button>
+</div>				
+ 	    

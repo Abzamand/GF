@@ -1,0 +1,68 @@
+<div class="backgroundLoginContainer">
+	<div class="loginContainer">
+	<img style="width:190px; margin-bottom:55px;margin-left:45px" src="./assets/images/logo.png">
+		<form ng-submit="login()" name="userForm">
+			<div class="emailField">
+				<input class="inputEmailField" type="text" ng-model="username"
+					placeholder="" required>
+			</div>
+			<div class="passwordField">
+				<input class="inputPasswordField" type="{{inputType}}"
+					ng-model="password" placeholder="" required> <span
+					class="showPassword" ng-click="hideShowPassword()"> 
+					<img id="imgPass" src="./assets/images/Eye_Icon.png">
+				</span>
+			</div>
+			<div class="forgotPasswordContainer">
+				<text class="forgotPassword" type="button">Forget password?</text>
+			</div>
+
+			<div class="loginSubmitContainer">
+				<button class="loginSubmit" type="submit"
+					ng-disabled="userForm.$invalid || dataLoading">Login</button>
+			</div>
+
+			<!-- <img ng-if="dataLoading" tabindex="-1"
+                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+             -->
+		</form>
+	</div>
+</div>
+
+
+<!-- 
+<div>
+	<div class="loginContainer"
+		style="background-image: url('./assets/images/gfLogin.jpeg'); overflow: hidden;">
+	</div>
+	<div class="loginContainer" align="center"
+		style="padding: 50px; background-image: url('./assets/images/batik.png');">
+		<img style="width: 190px; margin-bottom: 55px;"
+			src="./assets/images/logo.png">
+		<form
+			style="background: white; border-radius: 20px; display: grid; align-items: center; max-width: 80%; height: 50vh;"
+			ng-submit="login()" name="userForm">
+			<div>
+				<div class="material-textfield">
+					<input type="text" ng-model="username" placeholder="" required>
+					<label>Username</label>
+				</div>
+				<div class="material-textfield">
+					<input type="{{inputType}}" ng-model="password" placeholder=""
+						required> <label>Password</label> <span
+						class="showPassword" ng-click="hideShowPassword()"><img
+						id="imgPass" src="./assets/images/iconShowPass.png"></span>
+				</div>
+
+				<button class="forgotPassword" type="button">Forgot
+					Password ?</button>
+				<button class="loginSubmit" type="submit"
+					ng-disabled="userForm.$invalid || dataLoading">SIGN IN</button>
+				<img ng-if="dataLoading" tabindex="-1"
+					src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+			</div>
+		</form>
+	</div>
+</div>
+
+ -->

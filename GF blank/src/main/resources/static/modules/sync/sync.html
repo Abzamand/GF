@@ -1,0 +1,19 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">SYNC</p>
+	</div>
+	<section>
+		<ul class="flexContainer">
+			<li><button class="buttonSync" ng-click="sync('masterData')"><img class="masterData" ><p>Master Data</p></button></li>
+			<li><button class="buttonSync" ng-click="sync('tpConfirm')"><img class="tpConfirm" ><p>Transfer Posting Confirmation</p></button></li>
+			<li><button class="buttonSync" ng-click="sync('grFg')"><img class="grfg" ><p>Good Receipt PO FG</p></button></li>
+		</ul>
+		<ul class="flexContainer">
+			<li><button class="buttonSync" ng-click="sync('deliveryOrder')"><img class="deliveryOrder" ><p>Delivery Order</p></button></li>
+			<li><button class="buttonSync" ng-click="sync('assign')"><img class="assignDo" ><p>Assign DO</p></button></li>
+			<!-- <li><button class="buttonSync" ng-click="sync('pgiShipment')"><img class="pgiShipment" ><p>PGI Shipment</p> </button></li> -->
+			<li><button class="buttonSync" ng-click="sync('oneTimeCustomer')"><img class="oneTimeCustomer" ><p>Update POD Status</p></button></li>
+		</ul>
+	</section>	
+</div>
+

@@ -1,0 +1,51 @@
+<div align="center"  ng-init="init()" class="loginSide">
+	<h1 style="color:white;font-size: 30px;">Welcome to <br> INACOM CT PLATFORM</h1>
+	<p style="color:white; text-align: left;"></p>
+</div>
+<div style="float: right;margin-right: 30px; margin-top: 10px;">
+	<p style="display:inline-block; color: #8ca0b3; cursor: pointer;">Already a member?</p>
+	<button type="button" class="buttonBorder" ng-click="goto('login')">LOGIN</button>
+</div>
+<div align="left" layout="row" ng-submit="login()" tabindex="-1" class="login-wrapper" style="padding-left: 450px; padding-top: 120px; width: 100%;">
+	<form name="userForm" action="?" method="POST" style="width: 100%;">
+		<h3 style="margin-bottom: 40px;">Sign up now to join our portal</h3>
+		<div style="display: inline-block; width: 49%;">
+			<div style="margin-bottom:20px; display: inline-block; margin-right: 50px;">
+				<p style="color: #008146; font-size: 12px;">Company / Personal Name</p>
+				<input type="text" ng-model="model.fullname" style="font-size:17px; width: 300px; border:none; border-bottom: 2px solid #ebebeb; color:black;" placeholder="Enter your name" required>
+			</div>
+			<div style="margin-bottom:20px; margin-right: 50px;">
+				<p style="color: #008146; font-size: 12px;">No. Telp</p>
+				<input type="number" ng-model="model.telp" style="font-size:17px; width: 300px; border:none; border-bottom: 2px solid #ebebeb; color:black;" placeholder="No. Telepon" required>
+			</div>
+			<div style="margin-bottom:20px; margin-right: 50px;">
+				<p style="color: #008146; font-size: 12px;">Email</p>
+				<input type="text" ng-model="model.email" style="font-size:17px; width: 300px; border:none; border-bottom: 2px solid #ebebeb; color:black;" placeholder="alamat@mail.com" required>
+			</div>
+			<div style="margin-bottom:20px; margin-right: 50px;">
+				<p style="color: #008146; font-size: 12px;">Password</p>
+				<input type="password" ng-model="model.password" style="font-size:17px; width: 300px; border:none; border-bottom: 2px solid #ebebeb; color:black;" placeholder="****" required>
+			</div>
+			<div style="margin-bottom:20px; margin-right: 50px;">
+				<p style="color: #008146; font-size: 12px;">Confirm Passowrdd</p>
+				<input type="password" ng-model="model.confimPassword" style="font-size:17px; width: 300px; border:none; border-bottom: 2px solid #ebebeb; color:black;" placeholder="****" required>
+			</div>
+			<div style="margin-bottom:20px; margin-right: 50px;">
+				<p style="color: #008146; font-size: 12px;">Address</p>
+				<textarea rows="5" cols="60" style="resize:none;font-size:17px; width: 300px; border:none; border-bottom: 2px solid #ebebeb; color:black;" ng-model="model.address" placeholder="Enter your address" required></textarea>
+			</div>
+		</div>
+		<div style="display: inline-block; width: 49%; vertical-align: top;">
+			<section>
+				<img ng-if="dataLoading" tabindex="-1"
+					src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+			</section>
+			<div style="margin-bottom:20px;">
+			      <div id="html_element"></div>
+			      <br>
+			      <button type="submit" style="width:width: 153px; height: 40px; border-radius: 3.6px; border: none; padding: 5px 30px; background-color: #99c741;"
+					ng-disabled="userForm.$invalid  || !captcha">REGISTER</button>
+			</div>
+		</div>
+	</form>
+</div>

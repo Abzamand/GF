@@ -1,0 +1,90 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent" >
+		<button class="buttonNoColor" ng-click="goto('/report/GoodReceiptPOSTO')" type="button" ><img src="./assets/images/iconBack.svg"></button>
+		<p style="position:absolute;margin:50px;" class="pHeader">Good Receipt PO STO No {{data.id}}</p>
+	</div>
+	<section>
+		<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Date</p>
+					<input type="textDisabled" ng-model="data.date" disabled>
+				</div>
+				<div>
+					<p>Plant From</p>
+					<input type="textDisabled" ng-model="data.idPlant" disabled>
+				</div>
+				<div>
+					<p>Plant To</p>
+					<input type="textDisabled" ng-model="data.plantTo" disabled>
+				</div>
+				<div>
+					<p>PO STO No</p>
+					<input type="textDisabled" ng-model="data.poStoNo" disabled>
+				</div>
+				<div>
+					<p>PO STO Date</p>
+					<input type="textDisabled" ng-model="data.poStoDate" disabled>
+				</div>
+			</div>
+			
+			<div class="column">
+				
+				<div>
+					<p>GR no SAP</p>
+					<input type="textDisabled" ng-model="data.grNoSap" disabled>
+				</div>
+				<div>
+					<p>Status</p>
+					<input type="textDisabled" ng-model="data.status" disabled>
+				</div>
+				<div>
+					<p>Info sync</p>
+					<textarea ng-model="data.infoSync" disabled></textarea>
+				</div>
+			</div>
+			<div class="column"></div>
+			
+			<table class="tableReport">
+				<thead>
+					<tr class="tableHeader">
+						<th>DELIVERY ORDER NO</th>
+						<th>ITEM NO</th>
+						<th>MATERIAL</th>
+						<th>EXPIRED DATE</th>
+						<th>BATCH NO</th>
+						<th>ORDER QTY</th>
+						<th>GR QTY</th>
+						<th>VARIANCE</th>
+						<th>REASON</th>
+						<th>PHOTO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="a in material">
+						<td ng-bind="a.doNoSap"></td>
+						<td ng-bind="a.doItemNo"></td>
+						<td>{{a.matNo}} <br> {{a.matDesc}}</td>
+						<td ng-bind="a.expDate"></td>
+						<td ng-bind="a.batchNo"></td>
+						<td>{{a.ordQty}} {{a.uom}}</td>
+						<td>{{a.grQty}} {{a.uom}}</td>
+						<td ng-bind="a.variance"></td>
+						<td ng-bind="a.reason"></td>
+						<td><button ng-click="showImage(a.photo)" class="buttonAction" type="button" ><img class="detailButton">View</button></td>
+					</tr>
+				</tbody>
+			</table>
+	</section>
+</div>
+
+<!-- POPUP -->
+<div ng-show="showPic" style="background: rgba(0,0,0,0.5); width: 100vw; height: 100vh;  z-index: 100; position: fixed; top: 0; left: 0; font-size: 13px;">
+	<div class="filterPopUpImg">
+		<img style="max-width:500px; max-height:400px"data-ng-src="{{photo}}">
+		<div>
+			<button style="position: absolute; bottom: 20px; left: 70%; transform: translate(-50%, 0); padding: 10px 5%; border-radius: 10px; font-size: 11px; " class="buttonWhite" ng-click="showPic = false">Close</button>
+		</div>
+	</div>
+</div>
+<!-- END POPUP -->

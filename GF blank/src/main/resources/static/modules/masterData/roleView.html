@@ -1,0 +1,26 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent" >
+		<button class="buttonNoColor" ng-click="goto('/masterData/roleList')" type="button" ><img src="./assets/images/iconBack.svg"></button>
+		<p style="position:absolute;margin:50px;" class="pHeader">Role View</p>
+	</div>
+	<section>
+		<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Role</p>
+					<input type="textDisabled" ng-model="data.id" disabled>
+				</div>
+				<div>
+					<p>Name</p>
+					<input type="textDisabled" ng-model="data.groupName" disabled>
+				</div>
+				
+				<div style="display:inline;column-count:2;">
+					<p>Authority</p>
+					<ul style="column-count:4;display:table-caption">
+		                <li style="display:inline-block;margin-right:10px;width:255px"  ng-repeat="x in role track by $index"><input type="checkbox" ng-model="x.selected" disabled/>{{x.description}}</li>
+			        </ul>			
+				</div>
+			</div>
+	</section>
+</div>

@@ -1,0 +1,73 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent" >
+		<button class="buttonNoColor" ng-click="goto('/report/Shipment')" type="button" ><img src="./assets/images/iconBack.svg"></button>
+		<p style="position:absolute;margin:50px;" class="pHeader">Shipment No {{data.shipmentNo}}</p>
+		<button class="buttonRed" ng-click="cancel()" type="button" ><img class="cancel">CANCEL</button>
+	</div>
+	<section>
+		<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Date</p>
+					<input type="textDisabled" ng-model="data.shipmentDate" disabled>
+				</div>
+				<div>
+					<p>Sloc</p>
+					<input type="textDisabled" ng-model="data.idSloc" disabled>
+				</div>
+				<div>
+					<p>Plant</p>
+					<input type="textDisabled" ng-model="data.idPlant" disabled>
+				</div>
+				<div>
+					<p>Vendor Forward.</p>
+					<input type="textDisabled" ng-model="data.vendorForwarding" disabled>
+				</div>
+				<div>
+					<p>TP No SAP</p>
+					<input type="textDisabled" ng-model="data.pgiShipmentNo" disabled>
+				</div>
+			</div>
+			
+			<div class="column">
+				<div>
+					<p>Loading Point</p>
+					<input type="textDisabled" ng-model="data.loadingPoint" disabled>
+				</div>
+				<div>
+					<p>Transportation</p>
+					<input type="textDisabled" ng-model="transport" disabled>
+				</div>
+				<!-- <div>
+					<p>Police No</p>
+					<input type="textDisabled" ng-model="data.policeNo" disabled>
+				</div> -->
+				
+				<div>
+					<p>Status</p>
+					<input type="textDisabled" ng-model="data.status" disabled>
+				</div>
+				<div>
+					<p>Info Sync</p>
+					<textarea ng-model="data.infoSync" disabled></textarea>
+				</div>
+			</div>
+			
+			<table class="tableReport">
+				<thead>
+					<tr class="tableHeader">
+						<th>NO</th>
+						<th>DO NO</th>
+						<th>DO DATE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="a in material track by $index">
+						<td>{{$index + 1}}</td>
+						<td ng-bind="a.doNo"></td>
+						<td ng-bind="a.doDate"></td>
+					</tr>
+				</tbody>
+			</table>
+	</section>
+</div>

@@ -1,0 +1,67 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent" >
+		<button class="buttonNoColor" ng-click="goto('/report/TransferPosting')" type="button" ><img src="./assets/images/iconBack.svg"></button>
+		<p style="position:absolute;margin:50px;" class="pHeader">Transfer Posting Sender Confirmation No. {{data.id}}</p>
+	</div>
+	<section>
+		<form ng-submit="save()" name="myForm" class="formContainer">
+			
+			<div class="column">
+				<div>
+					<p>Date</p>
+					<input type="textDisabled" ng-model="data.date" disabled>
+				</div>
+				<div>
+					<p>OEM From</p>
+					<input type="textDisabled" ng-model="data.oemFrom" disabled>
+				</div>
+				<div>
+					<p>OEM To</p>
+					<input type="textDisabled" ng-model="data.oemTo" disabled>
+				</div>
+				<div>
+					<p>TP No</p>
+					<input type="textDisabled" ng-model="tpNoDate" disabled>
+				</div>
+			</div>
+			
+			<div class="column">
+				<div>
+					<p>Description</p>
+					<input type="textDisabled" ng-model="data.descr" disabled>
+				</div>
+				<div>
+					<p>Status</p>
+					<input type="textDisabled" ng-model="data.status" disabled>
+				</div>
+				<div>
+					<p>Info Sync</p>
+					<textarea ng-model="data.infoSync" disabled></textarea>
+				</div>
+			</div>
+			<div class="column"></div>
+			
+			<table class="tableReport">
+				<thead>
+					<tr class="tableHeader">
+						<th>ITEM NO</th>
+						<th>DOC ITEM NO</th>
+						<th>MATERIAL</th>
+						<th>BATCH NO</th>
+						<th>OEM QTY</th>
+						<th>SAP QTY</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="a in material">
+						<td ng-bind="a.itemNo"></td>
+						<td ng-bind="a.docItem"></td>
+						<td>{{a.matNo}} <br> {{a.matDesc}}</td>
+						<td ng-bind="a.batchNo"></td>
+						<td>{{a.qtyOem}} {{a.uomOem}}</td>
+						<td>{{a.orderQty}} {{a.uom}}</td>
+					</tr>
+				</tbody>
+			</table>
+	</section>
+</div>

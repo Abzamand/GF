@@ -1,0 +1,70 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">Employee</p>
+		<button ng-show="(menu.menus | filter : { 'id' : 3 } : true).length > 0" ng-click="resetPages();goto('/masterData/employeeCreate')"  type="button" class="buttonBlue"><img class="createButton" >CREATE</button>
+	</div>
+	<section>
+		<form ng-submit="getRequest(0)" class="tableContainer">
+			<table class="tableBlue">
+				<thead>
+					<tr class="tableHeader">
+						<th>USER LOGIN</th>
+						<th>NAME</th>
+						<th>ID PLANT</th>
+						<th>PLANT NAME</th>
+						<th>ROLE</th>
+						<th>STATUS</th>
+						<th>ACTION</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="searchPane">
+						<td><input placeholder="Search User Login" type="text" ng-model="filter.userlogin" class="inputSearch"></td>
+						<td><input placeholder="Search Name" type="text" ng-model="filter.name" class="inputSearch"></td>
+						<td><input placeholder="Search Id Plant" type="text" ng-model="filter.idPlant" class="inputSearch"></td>
+						<td><input placeholder="Search Plant Name" type="text" ng-model="filter.namePlant" class="inputSearch"></td>
+						<td><input placeholder="Search Role" type="text" ng-model="filter.role" class="inputSearch"></td>
+						<td>
+							<select class="inputSearch" ng-model="filter.status">
+								<option value="">All</option>
+								<option value="1">Active</option>
+								<option value="0">Non Active</option>
+							</select>
+						</td>
+						<td>
+							<button type="button" class="buttonClear" ng-click="clearFilter()"><img class="clearButton" >Clear</button>
+							<button type="submit" class="buttonSearch" ><img class="searchButton" >Search</button>
+						</td>
+					</tr>
+					<tr ng-repeat="a in list">
+						<td ng-bind="a.userlogin"></td>
+						<td ng-bind="a.name"></td>
+						<td ng-bind="a.idPlant"></td>
+						<td ng-bind="a.namePlant"></td>
+						<td ng-bind="a.role"></td>
+						<td style="{{a.status ? 'color:#3577b1' : 'color:red' }}">{{a.status ? 'Active' : 'Non Active'}}</td>
+						<td>
+							<button class="buttonAction" ng-click="goEdit(a.id)" type="button" ><img class="editButton">Edit</button>
+							<button class="buttonAction" ng-click="goView(a.id)" type="button" ><img class="detailButton">View</button>
+							<button class="buttonAction" id="buttonAction" ng-click="delete(a.id)" type="button" ><img class="deleteButton" >Delete</button>
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div class="paging" ng-show="list.length">
+			<md-button class="skipButton" aria-label="firstPage" ng-show="listPage.currentPage > 0" ng-click="getRequest(0)">
+				<md-tooltip>first page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_previous</i>
+			</md-button>
+			<p ng-show="listPage.currentPage > 0 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage - 1)" role="buttonNextPrev">Previous</p>
+			<p ng-repeat="a in listPage" ng-bind="a" ng-click="getRequest(a-1)" role="{{a == listPage.currentPage+1?'buttonDisabled':'button'}}"></p>
+			<p ng-show="listPage.currentPage < listPage.totalPage-1 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage + 1)" role="buttonNextPrev">Next</p>
+			<md-button class="skipButton" aria-label="lastPage" ng-show="listPage.currentPage != listPage.totalPage-1" ng-click="getRequest(listPage.totalPage-1)">
+				<md-tooltip>last page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_next</i>
+			</md-button>
+		</div>
+	</section>
+</div>

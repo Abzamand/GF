@@ -1,0 +1,124 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">PGI Shipment</p>
+	</div>
+	<section>
+		<form ng-submit="getRequest(1)" class="tableContainer">
+			<table class="tableBlue">
+				<thead>
+					<tr class="tableHeader">
+						<th>PGI SHIPMENT NO</th>
+						<th>DATE</th>
+						<th>SLOC</th>
+						<th>PLANT</th>
+						<th>SHIPMENT NO</th>
+						<th>SHIPMENT DATE</th>
+						<th>STATUS</th>
+						<th>ACTION</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input placeholder="Search Transfer Posting No" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td><input placeholder="Search Date" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td><input placeholder="Search OEM From" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td><input placeholder="Search OEM To" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td><input placeholder="Search Reservation No" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td><input placeholder="Search Reservation Date" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td><input placeholder="Search Status" type="text" ng-model="request['taking_order_header.id']" class="inputSearch"></td>
+						<td>
+							<button type="button" class="buttonClear" ng-click="request = {};">x  clear</button>
+							<button type="submit" class="buttonSearch" name="" id="" value=""><div class="search"></div>Search</button>
+						</td>
+					</tr>
+					<tr ng-repeat="a in list">
+						<td ng-bind="a.pgiShipmentNo"></td>
+						<td ng-bind="a.date"></td>
+						<td ng-bind="a.idSloc"></td>
+						<td ng-bind="a.idPlant"></td>
+						<td ng-bind="a.shipmentNo"></td>
+						<td ng-bind="a.shipmentDate"></td>
+						<td ng-bind="a.status"></td>
+						<td>
+							<button class="buttonAction" ng-click="goto('/report/PGIShipment/View/' + a.id)" type="button" ><img class="detailButton" >View</button>
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div class="paging" ng-show="list.length">
+			<md-button class="skipButton" aria-label="firstPage" ng-show="listPage.currentPage > 0" ng-click="getRequest(0)"> 
+				<md-tooltip>first page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_previous</i>
+			</md-button>
+			<p ng-show="listPage.currentPage > 0 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage - 1)">Previous</p>
+			<p ng-repeat="a in listPage" ng-bind="a" ng-click="getRequest(a-1)" ng-style="a == listPage.currentPage+1? {'color':'rgb(208,208,208)','cursor':'default'}:''"></p>
+			<p ng-show="listPage.currentPage < listPage.totalPage-1 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage + 1)">Next</p>
+			<md-button class="skipButton" aria-label="lastPage" ng-show="listPage.currentPage != listPage.totalPage-1" ng-click="getRequest(listPage.totalPage-1)"> 
+				<md-tooltip>last page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_next</i>
+			</md-button>
+		</div>
+	</section>
+</div>
+
+<!-- POPUP -->
+<div ng-show="filterReport" style="background: rgba(0,0,0,0.5); width: 100vw; height: 110vh;  z-index: 300; position: fixed; top: 0; left: 0; font-size: 13px;">
+	<div class="filterPopUp">
+		<div class="headerContent">
+			<p class="pHeader">Filter</p>
+		</div>
+		<br style="clear: both; ">
+		<div style="font-size: 13px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+			<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Date From </p>
+					<input style="width:70%;" type="date" ng-model="filter.from" required>
+				</div>
+				<div>
+					<p>Plant</p>
+					<select style="width:70%;"
+						ng-model="filter.plant"
+						ng-options="a.idPlant as a.idPlant for a in tempPlant"
+						ng-change="changeFilter('plant')">
+						<option value="" ng-show="!isUser"></option>
+					</select>
+				</div>
+				<div>
+					<p>Status</p>
+					<select style="width:70%;"
+						ng-model="filter.status"
+						ng-options="a for a in tempStatus">
+						<option value=""></option>
+					</select>
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<p>Date To </p>
+					<input style="width:70%;" type="date" ng-model="filter.to" required>
+				</div>
+				<div>
+					<p>Sloc</p>
+					<select style="width:70%;"
+						ng-model="filter.sloc"
+						ng-options="a.idSloc as a.idSloc for a in tempSloc"
+						ng-change="changeFilter('sloc')">
+						<option value="" ng-show="!isUser"></option>
+					</select>
+				</div>
+			</div>
+			
+		</form>
+			
+		</div>	
+		<div >
+			<button style="position: absolute; bottom: 20px; left: 73%; transform: translate(-50%, 0); padding: 10px 5%; border-radius: 10px; font-size: 15px; " class="buttonWhite" ng-click="filterReport = false">Cancel</button>
+			<button style="position: absolute; bottom: 20px; left: 90%; transform: translate(-50%, 0); padding: 10px 15px; border-radius: 10px; font-size: 15px; " class="buttonBlue" ng-disabled="myForm.$invalid" ng-click="search()">Search</button>
+		</div>
+	</div>
+</div>
+<!-- END POPUP -->
+	

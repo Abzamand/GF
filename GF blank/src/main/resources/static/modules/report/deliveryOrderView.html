@@ -1,0 +1,180 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent" >
+		<button class="buttonNoColor" ng-click="goto('/report/DeliveryOrder')" type="button" ><img src="./assets/images/iconBack.svg"></button>
+		<p style="position:absolute;margin:50px;" class="pHeader">Delivery Order No {{data.id}}</p>
+		<button class="buttonRed" ng-click="showReasonPopUp = true;" 
+		ng-show="(data.status == 'CREATE DO FAILED' || data.status == 'ASSIGN DO FAILED' || data.status == 'PGI FAILED') && data.enabled == 1"
+		type="button" ><img class="cancel">CANCEL</button>
+	</div>
+	<section>
+		<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Date</p>
+					<input type="textDisabled" ng-model="data.date" disabled>
+				</div>
+				<div>
+					<p>SLoc</p>
+					<input type="textDisabled" ng-model="data.idSloc" disabled>
+				</div>
+				<div>
+					<p>Destination</p>
+					<input type="textDisabled" ng-model="data.destination" disabled>
+				</div>
+				<div>
+					<p>SI No</p>
+					<input type="textDisabled" ng-model="data.shipmentInstuction" disabled>
+				</div>
+				<div>
+					<p>Shipment</p>
+					<input type="textDisabled" ng-model="data.shipNoDate" disabled>
+				</div>
+				<div>
+					<p ng-show="data.docType == 'SOBU'">Doc SO No</p>
+					<p ng-show="data.docType == 'STO'">Doc PO STO No</p>
+					<input type="textDisabled" ng-model="data.docNoDate" disabled>
+				</div>
+				<div>
+					<p>DO No SAP</p>
+					<input type="textDisabled" ng-model="data.doNo" disabled>
+				</div>
+			</div>
+			
+			<div class="column">
+				<div>
+					<p>Vehicle No</p>
+					<input type="textDisabled" ng-model="data.vehicleNo" disabled>
+				</div>
+				<div>
+					<p>JDA Load ID</p>
+					<input type="textDisabled" ng-model="data.jdaLoad" disabled>
+				</div>
+				<div>
+					<p>Police No</p>
+					<input type="textDisabled" ng-model="data.policeNo" disabled>
+				</div>
+				<div>
+					<p>Driver</p>
+					<input type="textDisabled" ng-model="data.driver" disabled>
+				</div>
+				<div>
+					<p>Route</p>
+					<input type="textDisabled" ng-model="data.route" disabled>
+				</div>
+				<div>
+					<p>Loading Point</p>
+					<input type="textDisabled" ng-model="data.loadingPoint" disabled>
+				</div>
+				<div>
+					<p>Est. Departure</p>
+					<input type="textDisabled" ng-model="data.estDepartureTime" disabled>
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<p>Vendor Expedition</p>
+					<input type="textDisabled" ng-model="data.vendorExpedition" disabled>
+				</div>
+				<div>
+					<p>PGI No</p>
+					<input type="textDisabled" ng-model="data.pgiNo" disabled>
+				</div>
+				<div>
+					<p>POD Status</p>
+					<input type="textDisabled" ng-model="data.podStatus" disabled>
+				</div>
+				<div>
+					<p>Status</p>
+					<input type="textDisabled" ng-model="data.status" disabled>
+				</div>
+				<div>
+					<p>Info Sync</p>
+					<textarea ng-model="data.infoSync" disabled></textarea>
+				</div>
+				<div ng-show="data.enabled == 0">
+					<p>Reason</p>
+					<textarea area input type="textDisabled" ng-model="data.notes" disabled></textarea>
+				</div>
+			</div>
+			
+			<table class="tableReport">
+				<thead>
+					<tr class="tableHeader">
+						<th></th>
+						<th>No</th>
+						<th>Doc Item No</th>
+						<th>MATERIAL</th>
+						<th>ORDER QTY</th>
+						<th>DO QTY</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat="a in material">
+					<tr>
+						<td><button style="textDisabled-align:center;" class="buttonAction" type="button" ng-click="a.open = !a.open">{{(a.open ? 'Close' : 'Open')}}</button></td>
+						<td ng-bind="a.itemNo"></td>
+						<td ng-bind="a.docItem"></td>
+						<td>{{a.matNo}} {{a.matDesc}}</td>
+						<td>{{a.orderQty}} {{a.uom}}</td>
+						<td>{{a.doQty}} {{a.uom}}</td>
+					</tr>
+					<tr>
+						<td ng-show="a.open"></td>
+						<td ng-show="a.open"></td>
+						<td ng-show="a.open">
+							<table class="tableReport" style="border: none !important; margin: 0 !important;">
+								<thead>
+									<tr class="tableHeader">
+										<th>No.</th>
+										<th>Batch No</th>
+										<th>Actual Qty</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="x in batch | filter:{itemNo : a.docItem}">
+										<td>{{$index + 1}}</td>
+										<td ng-bind="x.batchNo"></td>
+										<td>{{x.qty}} {{x.uom}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td ng-show="a.open"></td>
+						<td ng-show="a.open"></td>
+					</tr>
+				</tbody>
+			</table>
+	</section>
+</div>
+
+
+<!-- POPUP -->
+<div 
+	ng-show = "showReasonPopUp"
+	style="background: rgba(0,0,0,0.5); 
+	width: 100vw; height: 100vh;  z-index: 100; position: fixed; top: 0; left: 0; font-size: 13px;">
+	<div class="reasonPopUp">
+		<div class="headerContent">
+			<p class="pHeader">Input your reason</p>
+		</div>
+		<div style="font-size: 10px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+			<form ng-submit="cancel()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<textarea  area input type="textDisabled" style="min-width:100%;" rows="7"  ng-model="reasonPopUp.result" ></textarea>
+				</div>
+			</div>
+			
+		</form>
+
+		</div>
+		<div>
+			<button style="position: absolute; 
+				bottom: 20px; left: 63%; transform: translate(-50%, 0); 
+				padding: 10px 5%; border-radius: 10px; font-size: 11px; " class="buttonWhite" ng-click="showReasonPopUp = false">Cancel</button>
+			<button style="position: absolute; 
+				bottom: 20px; left: 83%; transform: translate(-50%, 0); padding: 10px 15px; border-radius: 10px; font-size: 11px; " 
+				class="buttonBlue" ng-disabled="myForm.$invalid" ng-click="cancel()">Save</button>
+		</div>
+	</div>
+</div>
+<!-- END POPUP -->

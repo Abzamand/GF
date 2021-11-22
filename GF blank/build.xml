@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jul 7, 2016 2:35:03 PM                                                        
+
+     project    
+     description
+                   
+     Robby                                                                
+     ====================================================================== -->
+<project name="bsp" default="bsp-jar">
+    <description>
+            description
+    </description>
+	<property name="project-name" value="${ant.project.name}" />
+	<property name="builder" value="Qualitas" />
+	<property name="appVersion" value="0.0.1"/>
+
+	<property name="jar-name" value="${project-name}-${appVersion}.jar"/>
+    <property name="war-name" value="${project-name}.war" />
+    <property name="source-directory" value="src/main" />
+
+    <property name="classes-directory" value="target/classes" />
+    <!--<property name="web-inf-directory" value="target/${ant.project.name}/WEB-INF" />
+    <property name="lib-directory" value="${web-inf-directory}/lib" />
+    <property name="web-directory" value="src/main/webapp" />
+    <property name="web-xml-file" value="src/main/webapp/WEB-INF/web.xml" />-->
+
+    <property name="build-directory" value="build" />
+    <property name="dist-directory" value="dist" />
+
+    <!-- exclude smua folder "module" yg ada di dalam war-->
+    <property name="module-for-exclude" value="**/module/**" />
+	
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+	<target name="bsp-jar">
+        <delete file="build/${jar-name}"/>
+
+        <jar destfile="${build-directory}/${jar-name}"
+             basedir="${classes-directory}"
+        	 excludes="**/application.properties">
+        	<!--<metainf dir="${source-directory}" includes="resources/**" ></metainf>-->
+            <manifest >
+                <attribute name="Built-By" value="${builder}" />
+                <attribute name="Built-On" value="${build-info.current-date}" />
+                <!--<attribute name="Built-At" value="${build-info.current-time}" />-->
+            </manifest>
+        </jar>
+
+        <delete dir="${dist-directory}" />
+    </target>
+</project>

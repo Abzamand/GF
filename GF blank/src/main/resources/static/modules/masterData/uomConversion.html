@@ -1,0 +1,151 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">UoM Conversion</p>
+		<div style="display:flex">
+			<a href="../../assets/template/Template Uom Conversion.xlsx" download="Template Uom Conversion.xlsx" style="text-decoration:none;"><button style="background: #3577b1" type="button" class="buttonRed"><img class="downloadButtonWhite" >TEMPLATE</button></a>
+			<button style="background: #3577b1" onclick="document.getElementById('inputExcel').click()" type="button" class="buttonRed"><img class="uploadButton" >UPLOAD</button>
+			<button style="background: #3577b1" ng-show="(menu.menus | filter : { 'id' : 38 } : true).length > 0" ng-click="create = true"  type="button" class="buttonRed"><img class="createButton" >CREATE</button>
+		</div>
+	</div>
+	<section>
+		<form ng-submit="getRequest(0)" class="tableContainer">
+			<table class="tableBlue">
+				<thead>
+					<tr class="tableHeader">
+						<th>ID VENDOR</th>
+						<th>VENDOR NAME</th>
+						<th>MATERIAL NO</th>
+						<th>MATERIAL DESC</th>
+						<th>QTY OEM</th>
+						<th>UOM OEM</th>
+						<th>QTY SAP</th>
+						<th>UOM SAP</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="searchPane">
+						<td><input placeholder="Search Id Vendor" type="text" ng-model="filter.idVendor" class="inputSearch"></td>
+						<td><input placeholder="Search Vendor Name" type="text" ng-model="filter.vendorName" class="inputSearch"></td>
+						<td><input placeholder="Search Material No" type="text" ng-model="filter.idMaterial" class="inputSearch"></td>
+						<td><input placeholder="Search Material Desc" type="text" ng-model="filter.materialName" class="inputSearch"></td>
+						<td><input placeholder="Search Qty OEM" type="text" ng-model="filter.qtyOem" class="inputSearch"></td>
+						<td><input placeholder="Search UoM OEM" type="text" ng-model="filter.uomOem" class="inputSearch"></td>
+						<td><input placeholder="Search Qty SAP" type="text" ng-model="filter.qtySap" class="inputSearch"></td>
+						<td><input placeholder="Search UoM SAP" type="text" ng-model="filter.uomSap" class="inputSearch"></td>
+						<td>
+							<button type="button" class="buttonClear" ng-click="clearFilter()"><img class="clearButton" >Clear</button>
+							<button type="submit" class="buttonSearch" ><img class="searchButton" >Search</button>
+						</td>
+					</tr>
+					<tr ng-repeat="a in list">
+						<td ng-bind="a.idVendor"></td>
+						<td ng-bind="a.vendorName"></td>
+						<td ng-bind="a.idMaterial"></td>
+						<td ng-bind="a.materialName"></td>
+						<td ng-bind="a.qtyOem"></td>
+						<td ng-bind="a.uomOem"></td>
+						<td ng-bind="a.qtySap"></td>
+						<td ng-bind="a.uomSap"></td>
+						<td>
+							<button class="buttonAction" ng-show="(menu.menus | filter : { 'id' : 39 } : true).length > 0" ng-click="openEdit(a)" type="button" ><img class="editButton">Edit</button>
+							<button class="buttonAction" ng-show="(menu.menus | filter : { 'id' : 40 } : true).length > 0" ng-click="openView(a)" type="button" ><img class="detailButton" >View</button>
+							<button class="buttonAction" ng-click="delete(a)" type="button" ><img class="deleteButton" >Delete</button>
+						</td>					
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div class="paging" ng-show="list.length">
+			<md-button class="skipButton" aria-label="firstPage" ng-show="listPage.currentPage > 0" ng-click="getRequest(0)">
+				<md-tooltip>first page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_previous</i>
+			</md-button>
+			<p ng-show="listPage.currentPage > 0 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage - 1)" role="buttonNextPrev">Previous</p>
+			<p ng-repeat="a in listPage" ng-bind="a" ng-click="getRequest(a-1)" role="{{a == listPage.currentPage+1?'buttonDisabled':'button'}}"></p>
+			<p ng-show="listPage.currentPage < listPage.totalPage-1 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage + 1)" role="buttonNextPrev">Next</p>
+			<md-button class="skipButton" aria-label="lastPage" ng-show="listPage.currentPage != listPage.totalPage-1" ng-click="getRequest(listPage.totalPage-1)">
+				<md-tooltip>last page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_next</i>
+			</md-button>
+		</div>
+	</section>
+</div>
+
+
+<!-- POPUP -->
+<div  ng-show="create" style="background: rgba(0,0,0,0.5); width: 100vw; height: 100vh;  z-index: 100; position: fixed; top: 0; left: 0; font-size: 13px;">
+	<div class="filterPopUp" style="height:70%;">
+		<div class="headerContent">
+			<p ng-show="create && !edit && !view" class="pHeader">Create</p>
+			<p ng-show="create && edit && view" class="pHeader">View</p>
+			<p ng-show="create && !edit && view" class="pHeader">Edit</p>
+		</div>
+		<div style="font-size: 13px; padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+			<form ng-submit="save()" name="myForm" class="formContainer" >
+				<div class="column">
+					<div>
+						<p>ID Vendor</p>
+						<input type="{{view ? 'textDisabled':'text'}}" list="idVendor-list"
+							ng-change="changeParam('idVendor',request.idVendor)" 
+							ng-disabled="view"
+							ng-model="request.idVendor" required>
+						<datalist id="idVendor-list">
+							<option ng-repeat="a in vendor">{{a.id}}</option>
+						</datalist>
+					</div>
+					<div>
+						<p>Vendor Name</p>
+						<input type="{{view ? 'textDisabled':'text'}}" list="vendorName-list"
+							ng-change="changeParam('vendorName',request.vendorName)"
+							ng-disabled="view"
+							ng-model="request.vendorName" required>
+						<datalist id="vendorName-list">
+							<option ng-repeat="a in vendor">{{a.name}}</option>
+						</datalist>
+					</div>
+					<div>
+						<p>ID Material</p>
+						<input type="{{view ? 'textDisabled':'text'}}" list="idMaterial-list"
+							ng-change="changeParam('idMaterial',request.idMaterial)"
+							ng-disabled="view"
+							ng-model="request.idMaterial" required>
+						<datalist id="idMaterial-list">
+							<option ng-repeat="a in material">{{a.id}}</option>
+						</datalist>
+					</div>
+					<div>
+						<p>Material Name</p>
+						<input type="{{view ? 'textDisabled':'text'}}" list="materialName-list"
+							ng-change="changeParam('materialName',request.materialName)"
+							ng-disabled="view"
+							ng-model="request.materialName" required>
+						<datalist id="materialName-list">
+							<option ng-repeat="a in material">{{a.name}}</option>
+						</datalist>
+					</div>
+					<div>
+						<p>Qty OEM</p>
+						<input ng-disabled="view && edit" style="width:min(158px,35%); margin-right:16px;" type="{{view && edit ? 'textDisabled':'text'}}" ng-model="request.qtyOem" required>
+						
+						<p>UoM OEM</p>
+						<input ng-disabled="view && edit" style="width:min(158px,35%);" type="{{view && edit ? 'textDisabled':'text'}}" ng-model="request.uomOem" required>
+					</div>
+					<div>
+						<p>Qty SAP</p>
+						<input ng-disabled="view && edit" style="width:min(158px,35%);margin-right:16px;" type="{{view && edit ? 'textDisabled':'text'}}" ng-model="request.qtySap" required>
+						
+						<p>UoM SAP</p>
+						<input ng-disabled="view && edit" style="width:min(158px,35%);" type="{{view && edit ? 'textDisabled':'text'}}" ng-model="request.uomSap" required>
+					</div>
+				</div>
+			</form>
+		</div>	
+		<div style="display:flex">
+			<button style="position: absolute; bottom: 20px; {{((create && edit && view) ? 'left: 90%' : 'left:70%' )}}; transform: translate(-50%, 0); padding: 10px 5%; border-radius: 10px; " class="buttonWhite" ng-click="create = false;edit = false;view = false;request = null;material={}">Cancel</button>
+			<button ng-show="create && !edit && !view" style="position: absolute; bottom: 20px; left: 90%; transform: translate(-50%, 0); padding: 10px 5%; border-radius: 10px; background: #3577b1;color:white; " class="buttonWhite" ng-click="save()" ng-disabled="myForm.$invalid">SAVE</button>
+			<button ng-show="create && !edit && view" style="position: absolute; bottom: 20px; left: 90%; transform: translate(-50%, 0); padding: 10px 5%; border-radius: 10px; background: #3577b1;color:white; " class="buttonWhite" ng-click="update()" ng-disabled="myForm.$invalid">SAVE</button>
+		</div>
+	</div>
+</div>
+<!-- END POPUP -->

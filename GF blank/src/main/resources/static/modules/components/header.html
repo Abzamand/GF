@@ -1,0 +1,98 @@
+<div id="loaderContainer" style="display: none;">
+	<div class="loader"></div>
+</div>
+
+<div ng-hide="hideHeader">
+	<div class="header">
+		<md-button style="color:#8998b1;font-size:30px;" class="md-icon-button menuButton" ng-click="toggle.menu = !toggle.menu;$event.stopPropagation();"> 
+			<md-tooltip>menu</md-tooltip>
+			<i class="material-icons menuIcon" style="vertical-align: baseline;">menu</i>
+		</md-button>
+		
+		<div style="
+			  display: flex;
+			  justify-content: flex-end;">
+			  
+			<div class="dropdown" ng-show="isDashboard();">
+				  <button class="dropbtn" ng-click="$event.stopPropagation()"><img class="downloadButtonWhite" >
+				  DOWNLOAD</button>
+				  <div class="dropdown-content">
+					  <a ng-click="doDownload(1)">User manual</a>
+					  <a ng-click="doDownload(2)">Mobile app</a>
+				  </div>
+			</div>
+			
+			<!-- <div class="userContainer"
+				ng-click="$event.stopPropagation()" >
+				<img style="margin-right: 10px;width: 40px; height: auto;" id="myImg"
+					 data-ng-src="{{userLoginDetail.photo ? userLoginDetail.photo : './assets/images/iconProfile.svg'}}">
+				<p style="margin:15px 15px 15px 15px ;width:auto;max-width:200px;color:#304457;font-size: 15px;font-weight: bold" ng-bind="userLoginDetail.username"></p>
+				
+				<ul class="dropdown-user">
+					<li class="logoutButton" ng-click="logout()" >LOG OUT</li>
+				</ul> 
+			</div> -->
+			
+			
+			<div class="userContainer">
+				<img style="margin-right: 10px;width: 40px;" id="myImg"
+					 data-ng-src="{{userLoginDetail.photo ? userLoginDetail.photo : './assets/images/iconProfile.svg'}}">
+				<p style="display:flex;align-items:center;margin:15px 15px 15px 15px ;width:auto;max-width:200px;color:#304457;font-size: 15px;font-weight: bold" ng-bind="userLoginDetail.username"></p>
+			</div>
+			
+			<div class="logoutContainer">
+				<img class="logoutImgButton" ng-click="logout()">
+			</div>
+		</div>
+		
+	</div>
+	
+	<div align="center" class="sideBar" style="left: 0px;">
+		<img style="width: 120px; height: auto; margin: 30px 0;" src="./assets/images/logo.png">
+		<div class="sideBarItem">
+			<button	ng-click="goto('/dashboard');" type="button"class="{{path =='dashboard' ? 'buttonSideActive': 'buttonSide'}}"> <img class="{{path == 'dashboard' ? 'iconSideDashboardActive' : 'iconSideDashboard'}}">Dashboard</button>
+			<button ng-show="(menu.menus | filter : { 'id' : 2 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 5 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 8 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 11 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 12 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 13 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 14 } : true).length > 0 ||
+							(menu.menus | filter : { 'id' : 37 } : true).length > 0	" ng-click="isMaster = !isMaster" type="button" class="{{path =='masterData' ? 'buttonSideActive': 'buttonSide'}}"> <img class="{{path == 'masterData' ? 'iconSideMasterDataActive' : 'iconSideMasterData'}}">Master Data</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 2 } : true).length > 0" ng-click="goto('/masterData/employeeList')" type="button" class="{{childPath=='employeeList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Employee</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 5 } : true).length > 0" ng-click="goto('/masterData/vendorList')" type="button" class="{{childPath=='vendorList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Vendor</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 8 } : true).length > 0" ng-click="goto('/masterData/roleList')" type="button" class="{{childPath=='roleList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Role</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 11 } : true).length > 0" ng-click="goto('/masterData/storageLocationList')" type="button" class="{{childPath=='storageLocationList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Storage Location</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 12 } : true).length > 0" ng-click="goto('/masterData/plantList')" type="button" class="{{childPath=='plantList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Plant</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 13 } : true).length > 0" ng-click="goto('/masterData/deviceList')" type="button" class="{{childPath=='deviceList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Device</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 14 } : true).length > 0" ng-click="goto('/masterData/materialList')" type="button" class="{{childPath=='materialList' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Material</button>
+				<button ng-show="isMaster && (menu.menus | filter : { 'id' : 37 } : true).length > 0" ng-click="goto('/masterData/uomConversion')" type="button" class="{{childPath=='uomConversion' ? 'buttonSideChildActive': 'buttonSideChild'}}" >UoM Conversion</button>
+				<!-- <button ng-show="isMaster && (menu.menus | filter : { 'id' : 15 } : true).length > 0" ng-click="goto('/masterData/materialTypeList')" type="button" class="{{childPath=='materialTypeList' ? 'buttonSideActive': 'buttonSide'}}" >Material Type</button> -->
+				
+			<button ng-click="isReport = !isReport" type="button" class="{{path =='report' ? 'buttonSideActive': 'buttonSide'}}"> <img class="{{path == 'report' ? 'iconSideReportActive' : 'iconSideReport'}}">Report Transaction</button>
+				<button ng-show="isReport && (menu.menus | filter : { 'id' : 19 } : true).length > 0" ng-click="goto('/report/TransferPosting');switchPage();" type="button" class="{{childPath=='TransferPosting' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Transfer Posting Sender Confirmation</button>
+				<button ng-show="isReport && (menu.menus | filter : { 'id' : 21 } : true).length > 0" ng-click="goto('/report/TransferPostingConfirmation');switchPage();" type="button" class="{{childPath=='TransferPostingConfirmation' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Transfer Posting Confirmation</button>
+				<button ng-show="isReport && (menu.menus | filter : { 'id' : 23 } : true).length > 0" ng-click="goto('/report/GoodReceiptFG');switchPage();" type="button" class="{{childPath=='GoodReceiptFG' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Good Receipt - FG</button>
+				<button ng-show="isReport && (menu.menus | filter : { 'id' : 25 } : true).length > 0" ng-click="goto('/report/GoodReceiptPOSTO');switchPage();" type="button" class="{{childPath=='GoodReceiptPOSTO' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Good Receipt - PO STO</button>
+				<button ng-show="isReport && (menu.menus | filter : { 'id' : 27 } : true).length > 0" ng-click="goto('/report/DeliveryOrder');switchPage();" type="button" class="{{childPath=='DeliveryOrder' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Delivery Order</button>
+				<!-- <button ng-show="isReport && (menu.menus | filter : { 'id' : 29 } : true).length > 0" ng-click="goto('/report/Shipment');switchPage();" type="button" class="{{childPath=='Shipment' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Shipment</button> -->
+				<!-- <button ng-show="isReport && (menu.menus | filter : { 'id' : 31 } : true).length > 0" ng-click="goto('/report/PGIShipment')" type="button" class="{{childPath=='PGIShipment' ? 'buttonSideActive': 'buttonSide'}}" >Post Good Issue Shipment</button> -->
+				
+			<button ng-show="(menu.menus | filter : { 'id' : 33 } : true).length > 0" ng-click="goto('/sync');" type="button" class="{{path =='sync' ? 'buttonSideActive': 'buttonSide'}}"><img class="{{path == 'sync' ? 'iconSideSyncActive' : 'iconSideSync'}}">Sync</button>
+			
+			<button ng-click="goto('/setting/updateProfile')" type="button" class="{{path =='setting' ? 'buttonSideActive': 'buttonSide'}}"> <img class="{{path == 'setting' ? 'iconSideSettingActive' : 'iconSideSetting'}}">Setting</button>
+				<!-- <button ng-show="isSetting" ng-click="goto('/setting/updateProfile')" type="button" class="{{childPath=='updateProfile' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Edit Profile</button>
+				<button ng-show="isSetting" ng-click="goto('/setting/changePassword')" type="button" class="{{childPath=='changePassword' ? 'buttonSideChildActive': 'buttonSideChild'}}" >Change Password</button> -->
+		</div>
+	</div>
+</div>
+
+<div ng-show="warning.show"
+	style="z-index: 20; min-width: 190px; min-height: 120px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);">
+	<div
+		style="padding: 10px; background-color: #1678cd; color: #fff; font-size: 12px; font-weight: bold;">Warning</div>
+	<p class="dragCancel" ng-click="warning.show = false;">x</p>
+	<div style="padding: 20px;">
+		<p style="font-size: 12px;" ng-bind="warning.message"></p>
+	</div>
+</div>

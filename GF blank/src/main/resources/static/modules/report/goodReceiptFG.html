@@ -1,0 +1,132 @@
+<div style="width:auto;" ng-init="init()" class="container">
+	<div class="headerContent">
+		<p class="pHeader">Good Receipt FG</p>
+		<!-- KUGANTI UNTUK SIDE BY SIDE BUTTON -->
+		<div class = "buttonRight">
+			<button  ng-click="doExport();"  type="button" class="buttonExport"><img class="downloadButton" >EXPORT</button>
+			<button  ng-click="filterReport = true;"  type="button" class="buttonBlue"><img class="filterButton" >FILTER</button>
+		</div>
+	</div>
+	<section>
+		<form ng-submit="getRequest(0)" class="tableContainer">
+			<table class="tableBlue">
+				<thead>
+					<tr class="tableHeader">
+						<th>GR FG NO</th>
+						<th>DATE</th>
+						<th>SLOC</th>
+						<th>PLANT</th>
+						<th>PO NO</th>
+						<th>PO DATE</th>
+						<th>DOC TYPE</th>
+						<th>STATUS</th>
+						<th>ACTION</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="searchPane">
+						<td><input placeholder="Search ID" type="text" ng-model="filter.search.grNoSap" class="inputSearch"></td>
+						<td><input placeholder="Search Date" type="text" ng-model="filter.search.date" class="inputSearch"></td>
+						<td><input placeholder="Search SLOC" type="text" ng-model="filter.search.idSloc" class="inputSearch"></td>
+						<td><input placeholder="Search PLANT" type="text" ng-model="filter.search.idPlant" class="inputSearch"></td>
+						<td><input placeholder="Search PO No" type="text" ng-model="filter.search.purchOrderNo" class="inputSearch"></td>
+						<td><input placeholder="Search PO Date" type="text" ng-model="filter.search.purchOrderDate" class="inputSearch"></td>
+						<td><input placeholder="Search PO Date" type="text" ng-model="filter.search.infoDocType" class="inputSearch"></td>
+						<td><input placeholder="Search Status" type="text" ng-model="filter.search.status" class="inputSearch"></td>
+						<td>
+							<button type="button" class="buttonClear" ng-click="clearFilter()"><img class="clearButton" >Clear</button>
+							<button type="submit" class="buttonSearch" ><img class="searchButton" >Search</button>
+						</td>
+					</tr>
+					<tr ng-repeat="a in list">
+						<td ng-bind="a.grNoSap"></td>
+						<td ng-bind="a.date"></td>
+						<td ng-bind="a.idSloc"></td>
+						<td ng-bind="a.idPlant"></td>
+						<td ng-bind="a.purchOrderNo"></td>
+						<td ng-bind="a.purchOrderDate"></td>
+						<td ng-bind="a.infoDocType"></td>
+						<td style="{{a.status == 'Canceled' ? 'color:red' : 'color:#3577b1' }}" ng-bind="a.status"></td>
+						<td>
+							<button class="buttonAction" ng-click="goto('/report/GoodReceiptFG/View/' + a.id)" type="button" ><img class="detailButton" >View</button>
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<div class="paging" ng-show="list.length">
+			<md-button class="skipButton" aria-label="firstPage" ng-show="listPage.currentPage > 0" ng-click="getRequest(0)">
+				<md-tooltip>first page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_previous</i>
+			</md-button>
+			<p ng-show="listPage.currentPage > 0 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage - 1)" role="buttonNextPrev">Previous</p>
+			<p ng-repeat="a in listPage" ng-bind="a" ng-click="getRequest(a-1)" role="{{a == listPage.currentPage+1?'buttonDisabled':'button'}}"></p>
+			<p ng-show="listPage.currentPage < listPage.totalPage-1 && listPage.currentPage != undefined" ng-click="getRequest(listPage.currentPage + 1)" role="buttonNextPrev">Next</p>
+			<md-button class="skipButton" aria-label="lastPage" ng-show="listPage.currentPage != listPage.totalPage-1" ng-click="getRequest(listPage.totalPage-1)">
+				<md-tooltip>last page</md-tooltip>
+				<i class="material-icons iconSkipButton">skip_next</i>
+			</md-button>
+		</div>
+	</section>
+</div>
+
+<!-- POPUP -->
+<div ng-show="filterReport" style="background: rgba(0,0,0,0.5); width: 100vw; height: 100vh;  z-index: 100; position: fixed; top: 0; left: 0; font-size: 13px;">
+	<div class="filterPopUp">
+		<div class="headerContent">
+			<p class="pHeader">Filter</p>
+		</div>
+		<div style="font-size: 10px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+			<form ng-submit="save()" name="myForm" class="formContainer">
+			<div class="column">
+				<div>
+					<p>Date From </p>
+					<input style="width:70%;" type="date" ng-model="filter.from" required>
+				</div>
+				<div>
+					<p>Plant</p>
+					<select style="width:70%;"
+						ng-model="filter.search.idPlant"
+						ng-options="a.idPlant as a.idPlant for a in tempPlant"
+						ng-change="changeFilter('plant')">
+						<option value="" ng-show="!isUser">All</option>
+					</select>
+				</div>
+				<div>
+					<p>Status</p>
+					<select style="width:70%;"
+						ng-model="filter.search.status"
+						ng-options="a for a in tempStatus">
+						<option value="">All</option>
+					</select>
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<p>Date To </p>
+					<input style="width:70%;" type="date" ng-model="filter.to" required>
+				</div>
+				<div>
+					<p>Sloc</p>
+					<select style="width:70%;"
+						ng-disabled="filter.search.idSloc === ''"
+						ng-model="filter.search.idSloc"
+						ng-options="a.idSloc as a.idSloc for a in tempSloc | filter:isSlocNull"
+						ng-change="changeFilter('sloc')">
+						<option value="" ng-show="!isUser">All</option>
+					</select>
+				</div>
+			</div>
+			
+		</form>
+			
+		</div>	
+		<div >
+			<button style="position: absolute; bottom: 20px; left: 70%; transform: translate(-50%, 0); padding: 10px 5%; border-radius: 10px; font-size: 11px; " class="buttonWhite" ng-click="filterReport = false">Cancel</button>
+			<button style="position: absolute; bottom: 20px; left: 90%; transform: translate(-50%, 0); padding: 10px 15px; border-radius: 10px; font-size: 11px; " class="buttonBlue" ng-disabled="myForm.$invalid" ng-click="search()">Search</button>
+		</div>
+	</div>
+</div>
+<!-- END POPUP -->
+	
