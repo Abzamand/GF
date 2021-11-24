@@ -278,7 +278,7 @@ button[disabled], .buttonNoColor[disabled] {
 	line-height: 27px;
 }
 
-/* login */
+/* login update*/
 .backgroundLoginContainer {
 	background: url("../images/gfLogin.jpeg") no-repeat;
 	background-size: cover;
@@ -292,7 +292,7 @@ button[disabled], .buttonNoColor[disabled] {
 .loginContainer {
 	background-color: #06060638;
 	width: 490px;
-	margin-right: 12%;
+	margin-right: 8%;
 	margin-top: 2%;
 	padding: 40px;
 	border-radius: 10px;
@@ -366,7 +366,7 @@ button[disabled], .buttonNoColor[disabled] {
 	padding: 10px;
 	font-weight: bold;
 }
-/* ----login--- */
+/* ----login update--- */
 
 /* MATERIAL IO */
 .material-textfield {
